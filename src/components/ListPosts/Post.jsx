@@ -24,33 +24,38 @@ const Post = ({ item }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  function like() {
-    dispatch({ type: CHANGE_LIKE_ITEM, payload: { id: id, like: true } });
-  }
-
-  function unLike() {
-    dispatch({ type: CHANGE_LIKE_ITEM, payload: { id: id, like: false } });
-  }
-
-  function deleteItem() {
-    dispatch({ type: DELETE_ITEM, payload: id });
-  }
-
   return (
     <ListItem>
       <ListItemText
         primary={
           <div className={classes.content}>
             {isLiked ? (
-              <IconButton onClick={unLike} className={classes.like}>
+              <IconButton
+                onClick={() =>
+                  dispatch({
+                    type: CHANGE_LIKE_ITEM,
+                    payload: { id: id, like: false },
+                  })
+                }
+                className={classes.like}
+              >
                 <Favorite />
               </IconButton>
             ) : (
-              <IconButton onClick={like}>
+              <IconButton
+                onClick={() =>
+                  dispatch({
+                    type: CHANGE_LIKE_ITEM,
+                    payload: { id: id, like: true },
+                  })
+                }
+              >
                 <FavoriteBorder />
               </IconButton>
             )}
-            <IconButton onClick={deleteItem}>
+            <IconButton
+              onClick={() => dispatch({ type: DELETE_ITEM, payload: id })}
+            >
               <Delete />
             </IconButton>
             <a
