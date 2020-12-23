@@ -28,57 +28,18 @@ const ListPosts = () => {
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.posts.loading);
   const items = useSelector((state) => state.posts.items);
-  const intermediateItems = useSelector(
-    (state) => state.posts.intermediateItems
-  );
   const sortDirection = useSelector((state) => state.posts.sortDirection);
 
-  const mapItems = items.map((item) => <Post key={item?.id} item={item} />);
+  const mapItems = items.map((item) => <Post key={item.id} item={item} />);
 
-  function onChange(event) {
+  const onChange = (event) => {
     const { value } = event.target;
 
-    const arr = intermediateItems;
-
-    if (value !== "default") {
-      dispatch({
-        type: SORT_ARRAY,
-        payload: {
-          sortDirection: value,
-          items: arr.sort(function (a, b) {
-            const labelA = a.title.toLowerCase();
-            const labelB = b.title.toLowerCase();
-
-            if (value === "asc") {
-              if (labelA < labelB) {
-                return -1;
-              }
-              if (labelA > labelB) {
-                return 1;
-              }
-              return 0;
-            } else {
-              if (labelA < labelB) {
-                return 1;
-              }
-              if (labelA > labelB) {
-                return -1;
-              }
-              return 0;
-            }
-          }),
-        },
-      });
-    } else {
-      dispatch({
-        type: SORT_ARRAY,
-        payload: {
-          sortDirection: value,
-          items: arr,
-        },
-      });
-    }
-  }
+    dispatch({
+      type: SORT_ARRAY,
+      payload: value,
+    });
+  };
 
   return (
     <Container maxWidth="md">

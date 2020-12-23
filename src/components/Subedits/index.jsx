@@ -11,8 +11,7 @@ const useStyles = makeStyles({
     width: "100%",
   },
   button: {
-    animation: "$marquee 8s linear infinite",
-    width: "40%",
+    animation: "$marquee 15s ease infinite",
     "&:hover": {
       animationPlayState: "paused",
       backgroundColor: blue[500],
@@ -20,10 +19,13 @@ const useStyles = makeStyles({
   },
   "@keyframes marquee": {
     "0%": {
-      transform: "translate(150%, 0)",
+      transform: `translateX(calc(${window.innerWidth}px - 100% - 30px))`,
+    },
+    "50%": {
+      transform: `translateX(0px)`,
     },
     "100%": {
-      transform: "translate(-100%, 0)",
+      transform: `translateX(calc(${window.innerWidth}px - 100% - 30px))`,
     },
   },
 });
@@ -32,26 +34,13 @@ const Subedits = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  function onClickFrontend() {
-    dispatch({ type: FETCH_POSTS, payload: "frontend" });
-  }
-  function onClickReactJs() {
-    dispatch({ type: FETCH_POSTS, payload: "reactjs" });
-  }
-  function onClickVueJs() {
-    dispatch({ type: FETCH_POSTS, payload: "vuejs" });
-  }
-  function onClickAngularJs() {
-    dispatch({ type: FETCH_POSTS, payload: "angular" });
-  }
-
   return (
-    <div>
+    <div style={{ width: "100%" }}>
       <div className={classes.marquee}>
         <Button
           variant="contained"
           color="primary"
-          onClick={onClickFrontend}
+          onClick={() => dispatch({ type: FETCH_POSTS, payload: "frontend" })}
           className={classes.button}
         >
           Frontend
@@ -61,7 +50,7 @@ const Subedits = () => {
         <Button
           variant="contained"
           color="primary"
-          onClick={onClickReactJs}
+          onClick={() => dispatch({ type: FETCH_POSTS, payload: "reactjs" })}
           className={classes.button}
         >
           ReactJs
@@ -71,7 +60,7 @@ const Subedits = () => {
         <Button
           variant="contained"
           color="primary"
-          onClick={onClickVueJs}
+          onClick={() => dispatch({ type: FETCH_POSTS, payload: "vuejs" })}
           className={classes.button}
         >
           VueJs
@@ -81,7 +70,7 @@ const Subedits = () => {
         <Button
           variant="contained"
           color="primary"
-          onClick={onClickAngularJs}
+          onClick={() => dispatch({ type: FETCH_POSTS, payload: "angular" })}
           className={classes.button}
         >
           AngularJs

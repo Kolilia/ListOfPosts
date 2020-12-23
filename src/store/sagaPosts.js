@@ -1,6 +1,6 @@
 import axios from "axios";
 import { put, takeEvery } from "redux-saga/effects";
-import { CHANGE_ITEMS, CHANGE_LOADING, FETCH_POSTS } from "./actions";
+import { CHANGE_LOADING, FETCH_POSTS, SET_ITEMS } from "./actions";
 
 function* fetchPosts(action) {
   try {
@@ -10,7 +10,7 @@ function* fetchPosts(action) {
       `https://www.reddit.com/r/${action.payload}.json`
     );
 
-    yield put({ type: CHANGE_ITEMS, payload: result.data.data.children });
+    yield put({ type: SET_ITEMS, payload: result.data.data.children });
 
     yield put({ type: CHANGE_LOADING, payload: false });
   } catch (err) {
